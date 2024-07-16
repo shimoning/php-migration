@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  php54:
+    container_name: php54
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./php54/Dockerfile
+    volumes:
+      - ./php54/htdocs:/var/www/html/
+    ports:
+      - 8054:80
+    depends_on:
+      - db
+
+  php83:
+    container_name: php83
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./php83/Dockerfile
+    volumes:
+      - ./php83/htdocs:/var/www/html/
+    ports:
+      - 8083:80
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    restart: always
+    image: mysql/mysql-server:latest
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db/initdb:/docker-entrypoint-initdb.d
+      - ./db/logs:/var/log/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+      - MYSQL_DATABASE=test
+
+  phpMyAdmin:
+    container_name: phpMyAdmin
+    restart: unless-stopped
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: test
+      PMA_PASSWORD: test
+    ports:
+      - 1080:80
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+    name: db-data

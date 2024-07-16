@@ -1,0 +1,8 @@
+FROM php:8.3-apache
+
+RUN apt-get update -y
+RUN apt-get install -y \
+    vim wget git \
+    libpq-dev libzip-dev libpng-dev libicu-dev libonig-dev libxml2-dev \
+	&& docker-php-ext-install gd intl pdo pdo_mysql zip bcmath pcntl \
+	&& docker-php-ext-enable gd intl pdo pdo_mysql zip
