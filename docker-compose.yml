@@ -14,6 +14,20 @@ services:
     depends_on:
       - mysql80
 
+  php56:
+    container_name: php56
+    restart: always
+    build:
+      context: .
+      dockerfile: ./php56/Dockerfile
+    volumes:
+      - ./php56/htdocs:/var/www/html
+      - ./php56/logs:/var/log/apache2
+    ports:
+      - ${PHP56_HTTP_PORT-8056}:80
+    depends_on:
+      - mariadb55
+
   php83:
     container_name: php83
     restart: always
@@ -38,7 +52,24 @@ services:
       - ./mysql80/logs:/var/log/mysql
       - ./mysql80/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
-      - ${MYSQL_LATEST_PORT-13306}:3306
+      - ${MYSQL80_PORT-13306}:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+      - MYSQL_DATABASE=test
+
+  mariadb55:
+    container_name: mariadb55
+    restart: always
+    image: mariadb:5.5
+    volumes:
+      - mariadb55-data:/var/lib/mysql
+      - ./mariadb55/initdb:/docker-entrypoint-initdb.d
+      - ./mariadb55/logs:/var/log/mysql
+      - ./mariadb55/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - ${MARIADB55_PORT-13307}:3306
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_USER=test
@@ -61,4 +92,7 @@ services:
 volumes:
   mysql80-data:
     name: mysql80-data
+    driver: local
+  mariadb55-data:
+    name: mariadb55-data
     driver: local
