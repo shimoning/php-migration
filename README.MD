@@ -44,6 +44,40 @@ PHPから利用する場合は以下のように設定する。
 * password: test
 * database: test (もしくは自分で作成したもの)
 
+### ホストからコマンドラインで接続
+`mysql -u test -p -h 127.0.0.1 -P 13306`
+
+### ゲストにログイン後コマンドラインで接続
+`mysql -u test -p`
+
 ##### 初期実行SQL
 `db/initdb` のフォルダ内に *SQL* や *シェルスクリプト* を入れることで、初回起動時に実行される。
+
 これは初めて docker を立ち上げた時のみ有効なので、それ以降にデータを入れたい場合は phpMyAdmin を利用する。
+
+## よく使うコマンド
+### サーバーを起動する
+`docker-compose up -d`
+
+(`-d` をつけないと、ゲストのログがずっと流れ続ける)
+
+### サーバー停止する
+#### 全部
+`docker-compose stop`
+
+#### 特定のコンテナ
+`docker-compose stop container_name`
+
+### サーバーを削除する
+#### サーバーだけ削除
+`docker-compose down`
+以下のものは消えない。
+* イメージ
+* ボリューム
+
+#### ボリュームも削除
+`docker-compose down -v`
+
+#### ビルドしたイメージも削除
+イメージを削除する場合は、コンテナ名が必要 (全部いっぺんに削除はできない)。
+`docker-compose down --rmi container_name`
