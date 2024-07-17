@@ -11,11 +11,11 @@ services:
     ports:
       - 8054:80
     depends_on:
-      - db
+      - mysql-latest
 
   php83:
     container_name: php83
-    restart: unless-stopped
+    restart: always
     build:
       context: .
       dockerfile: ./php83/Dockerfile
@@ -24,16 +24,16 @@ services:
     ports:
       - 8083:80
     depends_on:
-      - db
+      - mysql-latest
 
-  db:
-    container_name: db
+  mysql-latest:
+    container_name: mysql-latest
     restart: always
     image: mysql/mysql-server:latest
     volumes:
-      - db-data:/var/lib/mysql
-      - ./db/initdb:/docker-entrypoint-initdb.d
-      - ./db/logs:/var/log/mysql
+      - mysql-latest-data:/var/lib/mysql
+      - ./mysql-latest/initdb:/docker-entrypoint-initdb.d
+      - ./mysql-latest/logs:/var/log/mysql
     ports:
       - 3306:3306
     environment:
@@ -47,14 +47,15 @@ services:
     restart: unless-stopped
     image: phpmyadmin/phpmyadmin
     environment:
-      PMA_HOST: db
-      PMA_USER: test
-      PMA_PASSWORD: test
+      PMA_HOST: mysql-latest
+      PMA_USER: admin
+      PMA_PASSWORD: password
     ports:
       - 1080:80
     depends_on:
-      - db
+      - mysql-latest
 
 volumes:
-  db-data:
-    name: db-data
+  mysql-latest-data:
+    name: mysql-latest-data
+    driver: local

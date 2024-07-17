@@ -10,13 +10,13 @@ DockerCompose を利用した LAMP 環境。
 
 ## 利用前提条件
 * Dockerが既にインストールされていること
-  インストール方法: [Docker公式](https://docs.docker.jp/get-docker.html)
+  * インストール方法: [Docker公式](https://docs.docker.jp/get-docker.html)
 * コマンドラインツールが使えること
 * インターネット利用環境にあること
 
 ## 利用方法
 ### 起動
-1. docker が起動させる
+1. Docker を起動させる
 2. コマンドラインで `docker-compose.yml` のあるディレクトリに移動する
 3. `docker compose up -d` を入力し実行する (初回の場合時間がかかる)
 
