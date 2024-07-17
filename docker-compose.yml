@@ -9,10 +9,12 @@ services:
     volumes:
       - ./php54/htdocs:/var/www/html
       - ./php54/logs:/var/log/apache2
+      # - ./php54/000-default.conf:/etc/apache2/sites-available/000-default.conf
     ports:
       - ${PHP54_HTTP_PORT-8054}:80
-    depends_on:
+    links:
       - mysql80
+      - mariadb55
 
   php56:
     container_name: php56
@@ -23,9 +25,11 @@ services:
     volumes:
       - ./php56/htdocs:/var/www/html
       - ./php56/logs:/var/log/apache2
+      - ./php56/000-default.conf:/etc/apache2/sites-available/000-default.conf
     ports:
       - ${PHP56_HTTP_PORT-8056}:80
-    depends_on:
+    links:
+      - mysql80
       - mariadb55
 
   php83:
@@ -37,10 +41,12 @@ services:
     volumes:
       - ./php83/htdocs:/var/www/html
       - ./php83/logs:/var/log/apache2
+      - ./php83/000-default.conf:/etc/apache2/sites-available/000-default.conf
     ports:
       - ${PHP83_HTTP_PORT-8083}:80
-    depends_on:
+    links:
       - mysql80
+      - mariadb55
 
   mysql80:
     container_name: mysql80
@@ -81,13 +87,14 @@ services:
     restart: unless-stopped
     image: phpmyadmin/phpmyadmin
     environment:
-      PMA_HOST: mysql80
+      PMA_HOSTS: mysql80,mariadb55
       PMA_USER: admin
       PMA_PASSWORD: password
     ports:
       - ${PHPMYADMIN_HTTP_PORT-1080}:80
     depends_on:
       - mysql80
+      - mariadb55
 
 volumes:
   mysql80-data:

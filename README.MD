@@ -1,11 +1,12 @@
 # PHP のバージョン移行を検証するためのLAMP環境
-
 DockerCompose を利用した LAMP 環境。
 
 ## 構成
 * apache + php5.4
+* apache + php5.6
 * apache + php8.3
-* mysql
+* mysql8.0
+* mariadb5.5
 * phpMyAdmin
 
 ## 利用前提条件
@@ -26,6 +27,9 @@ DockerCompose を利用した LAMP 環境。
 #### PHP5.4
 `http://localhost:8054`
 
+#### PHP5.6
+`http://localhost:8056`
+
 #### PHP8.3
 `http://localhost:8083`
 
@@ -34,24 +38,39 @@ DockerCompose を利用した LAMP 環境。
 自動でログインされるようになっている。
 初期状態で `test` というデータベースが作成されている。
 
-#### データベース
+### データベース
 ブラウザからアクセスする場合は phpMyAdmin を利用する。
 
 PHPから利用する場合は以下のように設定する。
-* host: db
+
+#### MySQL 8.0
+* host: mysql80
+* port: 3306
+* username: test
+* password: test
+* database: test (もしくは自分で作成したもの)
+
+#### MariaDB 5.5
+* host: mariadb5.5
 * port: 3306
 * username: test
 * password: test
 * database: test (もしくは自分で作成したもの)
 
 ### ホストからコマンドラインで接続
+#### MySQL 8.0
 `mysql -u test -p -h 127.0.0.1 -P 13306`
+
+#### MariaDB 5.5
+`mysql -u test -p -h 127.0.0.1 -P 13307`
 
 ### ゲストにログイン後コマンドラインで接続
 `mysql -u test -p`
 
 ##### 初期実行SQL
-`db/initdb` のフォルダ内に *SQL* や *シェルスクリプト* を入れることで、初回起動時に実行される。
+以下のフォルダ内に *SQL* や *シェルスクリプト* を入れることで、初回起動時に実行される。
+* `mysql80/initdb`
+* `mariadb55/initdb`
 
 これは初めて docker を立ち上げた時のみ有効なので、それ以降にデータを入れたい場合は phpMyAdmin を利用する。
 
@@ -59,7 +78,7 @@ PHPから利用する場合は以下のように設定する。
 ### サーバーを起動する
 `docker-compose up -d`
 
-(`-d` をつけないと、ゲストのログがずっと流れ続ける)
+(`-d` をつけないと、ゲストのログがずっと流れ続け、 Ctrl+C で抜けると自動で stop してしまう)
 
 ### サーバー停止する
 #### 全部
