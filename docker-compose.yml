@@ -9,7 +9,7 @@ services:
     volumes:
       - ./php54/htdocs:/var/www/html
       - ./php54/logs:/var/log/apache2
-      # - ./php54/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./php54/000-default.conf:/etc/apache2/sites-available/000-default.conf
     ports:
       - ${PHP54_HTTP_PORT-8054}:80
     links:

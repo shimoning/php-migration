@@ -96,7 +96,3 @@ PHPから利用する場合は以下のように設定する。
 
 #### ボリュームも削除
 `docker-compose down -v`
-
-#### ビルドしたイメージも削除
-イメージを削除する場合は、コンテナ名が必要 (全部いっぺんに削除はできない)。
-`docker-compose down --rmi container_name`

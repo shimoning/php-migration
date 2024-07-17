@@ -6,3 +6,5 @@ RUN apt-get install -y \
     libpq-dev libzip-dev libpng-dev libicu-dev libonig-dev libxml2-dev \
 	&& docker-php-ext-install gd intl pdo pdo_mysql zip bcmath pcntl \
 	&& docker-php-ext-enable gd intl pdo pdo_mysql zip
+
+RUN a2enmod rewrite && service apache2 restart
