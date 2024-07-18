@@ -27,16 +27,37 @@ DockerCompose を利用した LAMP 環境。
 #### PHP5.4
 `http://localhost:8054`
 
+##### ドキュメント配置
+プログラムやhtml などは次の箇所に配置する。
+
+`php54/htdocs`
+
+
 #### PHP5.6
 `http://localhost:8056`
+
+##### ドキュメント配置
+プログラムやhtml などは次の箇所に配置する。
+
+`php56/htdocs`
 
 #### PHP8.3
 `http://localhost:8083`
 
+##### ドキュメント配置
+プログラムやhtml などは次の箇所に配置する。
+
+`php83/htdocs`
+
 #### phpMyAdmin
 `http://localhost:1080`
+
 自動でログインされるようになっている。
 初期状態で `test` というデータベースが作成されている。
+
+認証は不要だが、必要だった場合は以下を入力する。
+- username: admin
+- password: password
 
 ### データベース
 ブラウザからアクセスする場合は phpMyAdmin を利用する。
