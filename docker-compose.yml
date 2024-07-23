@@ -10,6 +10,7 @@ services:
       - ./php54/htdocs:/var/www/html
       - ./php54/logs:/var/log/apache2
       - ./php54/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./php54/php.ini:/usr/local/etc/php/php.ini
     ports:
       - ${PHP54_HTTP_PORT-8054}:80
     links:
@@ -26,6 +27,7 @@ services:
       - ./php56/htdocs:/var/www/html
       - ./php56/logs:/var/log/apache2
       - ./php56/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./php56/php.ini:/usr/local/etc/php/php.ini
     ports:
       - ${PHP56_HTTP_PORT-8056}:80
     links:
@@ -42,6 +44,7 @@ services:
       - ./php83/htdocs:/var/www/html
       - ./php83/logs:/var/log/apache2
       - ./php83/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./php83/php.ini:/usr/local/etc/php/php.ini
     ports:
       - ${PHP83_HTTP_PORT-8083}:80
     links:
