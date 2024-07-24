@@ -13,6 +13,10 @@ services:
       - ./php54/php.ini:/usr/local/etc/php/php.ini
     ports:
       - ${PHP54_HTTP_PORT-8054}:80
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USERNAME: test
+      MYSQL_PASSWORD: test
     links:
       - mysql80
       - mariadb55
@@ -30,6 +34,10 @@ services:
       - ./php56/php.ini:/usr/local/etc/php/php.ini
     ports:
       - ${PHP56_HTTP_PORT-8056}:80
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USERNAME: test
+      MYSQL_PASSWORD: test
     links:
       - mysql80
       - mariadb55
@@ -45,6 +53,10 @@ services:
       - ./php83/logs:/var/log/apache2
       - ./php83/000-default.conf:/etc/apache2/sites-available/000-default.conf
       - ./php83/php.ini:/usr/local/etc/php/php.ini
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USERNAME: test
+      MYSQL_PASSWORD: test
     ports:
       - ${PHP83_HTTP_PORT-8083}:80
     links:
@@ -63,10 +75,10 @@ services:
     ports:
       - ${MYSQL80_PORT-13306}:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_USER=test
-      - MYSQL_PASSWORD=test
-      - MYSQL_DATABASE=test
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: test
 
   mariadb55:
     container_name: mariadb55
@@ -80,21 +92,21 @@ services:
     ports:
       - ${MARIADB55_PORT-13307}:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_USER=test
-      - MYSQL_PASSWORD=test
-      - MYSQL_DATABASE=test
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: test
 
   phpMyAdmin:
     container_name: phpMyAdmin
     restart: unless-stopped
     image: phpmyadmin/phpmyadmin
+    ports:
+      - ${PHPMYADMIN_HTTP_PORT-1080}:80
     environment:
       PMA_HOSTS: mysql80,mariadb55
       PMA_USER: admin
       PMA_PASSWORD: password
-    ports:
-      - ${PHPMYADMIN_HTTP_PORT-1080}:80
     depends_on:
       - mysql80
       - mariadb55
