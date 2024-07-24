@@ -16,8 +16,8 @@ RUN apt-get install -y \
     libpq-dev libzip-dev libpng-dev libicu-dev libonig-dev libxml2-dev
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install gd intl pdo pdo_mysql zip bcmath pcntl \
-	&& docker-php-ext-enable gd intl pdo pdo_mysql zip
+RUN docker-php-ext-install gd intl mysql mysqli pdo pdo_mysql zip bcmath pcntl \
+	&& docker-php-ext-enable gd intl mysql mysqli pdo pdo_mysql zip
 
 # composer
-# COPY --from=composer:2.1 /usr/bin/composer /usr/bin/composer
+# COPY --from=composer:1 /usr/bin/composer /usr/bin/composer

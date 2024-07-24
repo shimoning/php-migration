@@ -117,3 +117,7 @@ PHPから利用する場合は以下のように設定する。
 
 #### ボリュームも削除
 `docker-compose down -v`
+
+### サーバーのイメージを作り直す
+#### 特定のコンテナ
+`docker-compose build container_name`
