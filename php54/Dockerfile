@@ -1,3 +1,8 @@
+# composer
+ARG COMPOSER_VERSION=2.2
+FROM composer:${COMPOSER_VERSION} AS composer-builder
+
+# php
 FROM php:5.4-apache
 
 RUN a2enmod rewrite
@@ -20,4 +25,4 @@ RUN docker-php-ext-install gd intl mysql mysqli pdo pdo_mysql zip bcmath pcntl \
 	&& docker-php-ext-enable gd intl mysql mysqli pdo pdo_mysql zip
 
 # composer
-# COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
+COPY --from=composer-builder /usr/bin/composer /usr/bin/composer

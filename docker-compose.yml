@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: ./php54/Dockerfile
+      args:
+        COMPOSER_VERSION: ${PHP54_COMPOSER_VERSION-2.2}
     volumes:
       - ./php54/htdocs:/var/www/html
       - ./php54/logs:/var/log/apache2
@@ -27,6 +29,8 @@ services:
     build:
       context: .
       dockerfile: ./php56/Dockerfile
+      args:
+        COMPOSER_VERSION: ${PHP56_COMPOSER_VERSION-2.2}
     volumes:
       - ./php56/htdocs:/var/www/html
       - ./php56/logs:/var/log/apache2
@@ -48,6 +52,8 @@ services:
     build:
       context: .
       dockerfile: ./php83/Dockerfile
+      args:
+        COMPOSER_VERSION: ${PHP83_COMPOSER_VERSION-2}
     volumes:
       - ./php83/htdocs:/var/www/html
       - ./php83/logs:/var/log/apache2
